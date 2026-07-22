@@ -1,0 +1,43 @@
+name: Agent Evals
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run pytest quality gate
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_BASE_URL: https://api.deepseek.com/v1
+        # LLM 评委偶有波动，允许单次自动重跑；好场景必须过、对抗必须被抓
+        run: python -m pytest test_agent.py -v --reruns 1 --tb=short
+
+      - name: Generate HTML report
+        if: always()
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_BASE_URL: https://api.deepseek.com/v1
+        run: python run_agent_eval.py
+
+      - name: Upload evaluation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-evaluation-report
+          path: agent_evaluation_report.html

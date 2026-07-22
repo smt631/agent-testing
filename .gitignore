@@ -1,0 +1,19 @@
+# ===== 密钥（绝不入库） =====
+.env
+
+# ===== 虚拟环境 =====
+.venv/
+venv/
+
+# ===== DeepEval / pytest 缓存 =====
+.deepeval/
+.pytest_cache/
+__pycache__/
+*.pyc
+
+# ===== 私人备考资料（绝不入库，严守 phase-02 教训） =====
+面试讲解.md
+
+# ===== 生成的报告（CI 以 Artifact 上传，不入库） =====
+agent_evaluation_report.html
+output/
