@@ -1,6 +1,6 @@
 # 阶段四：Agent 测试（LLM/Agent 了解）
 
-> AI 功能专项测试实习生 · 面试作品集
+
 > 用 DeepEval GEval 对**真实运行的客服 Agent** 做工具调用 / 死循环 / 权限边界 / 多步一致性评估。
 
 [![CI](https://github.com/smt631/agent-testing/actions/workflows/agent-evals.yml/badge.svg)](https://github.com/smt631/agent-testing/actions)
